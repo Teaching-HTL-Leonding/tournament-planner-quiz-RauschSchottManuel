@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TournamentPlanner.Data;
 
 namespace TournamentPlanner.Migrations
 {
     [DbContext(typeof(TournamentPlannerDbContext))]
-    partial class TournamentPlannerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210107092319_RelationsFixed")]
+    partial class RelationsFixed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -38,7 +40,7 @@ namespace TournamentPlanner.Migrations
                     b.Property<int>("Round")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WinnerId")
+                    b.Property<int>("WinnerId")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -94,7 +96,8 @@ namespace TournamentPlanner.Migrations
                     b.HasOne("TournamentPlanner.Data.Player", "Winner")
                         .WithMany()
                         .HasForeignKey("WinnerId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Player1");
 
